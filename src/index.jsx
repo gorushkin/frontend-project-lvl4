@@ -2,11 +2,14 @@
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import gon from 'gon';
+import App from './App';
 
 import '../assets/application.scss';
 
 // import faker from 'faker';
-import gon from 'gon';
 // import cookies from 'js-cookie';
 // import io from 'socket.io-client';
 
@@ -16,3 +19,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 console.log('it works!');
 console.log('gon', gon);
+
+const { channels } = gon;
+
+const root = document.getElementById('chat');
+ReactDOM.render(<App channels={channels} />, root);
