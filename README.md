@@ -1,5 +1,4 @@
-[![Github Actions Status](https://github.com/hexlet-components/projects-frontend-l4-server/workflows/Node%20CI/badge.svg)](https://github.com/hexlet-components/projects-frontend-l4-server/actions)
-
+![Node CI](https://github.com/gorushkin/frontend-project-lvl4/workflows/Node%20CI/badge.svg)
 ## Requirements
 
 * [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
