@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Channels from './Channels';
+// import Channels from './components/Channels';
+import App from './components/App';
 
 export default (gon) => {
-  const { channels } = gon;
-
   const root = document.getElementById('chat');
-  ReactDOM.render(<Channels channels={channels} />, root);
+  ReactDOM.render(<App gon={gon} />, root);
 };

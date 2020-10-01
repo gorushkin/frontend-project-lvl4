@@ -11,8 +11,8 @@ const channel = ({ id, name }) => (
   </li>
 );
 
-export default ({ channels }) => (
-  <div className="row h-100 pb-3">
+export default ({ channels }) => {
+  return (
     <div className="col-3 border-right">
       <div className="d-flex mb-2">
         <span>Channels</span>
@@ -24,6 +24,5 @@ export default ({ channels }) => (
         {channels.map((item) => channel(item))}
       </ul>
     </div>
-    <div className="col h-100" />
-  </div>
-);
+  );
+};
