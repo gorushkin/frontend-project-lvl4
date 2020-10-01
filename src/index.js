@@ -1,7 +1,5 @@
 // @ts-check
 
-/* eslint-disable react/jsx-filename-extension */
-
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import gon from 'gon';
