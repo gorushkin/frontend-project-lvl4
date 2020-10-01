@@ -1,5 +1,5 @@
 ![Node CI](https://github.com/gorushkin/frontend-project-lvl4/workflows/Node%20CI/badge.svg)
-## Requirements
+## Link
 
 * [Чат](https://polar-thicket-77600.herokuapp.com/)
 
