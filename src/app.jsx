@@ -1,13 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { configureStore } from '@reduxjs/toolkit';
 import App from './components/App';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import redusers from './redusers';
 
 export default (gon) => {
-  // const store = configureStore({
-  //   reducer: rootReduser,
-  // });
+  const store = createStore(redusers);
 
   const root = document.getElementById('chat');
-  ReactDOM.render(<App gon={gon} />, root);
+  ReactDOM.render(
+    <Provider store={store}>
+      <App gon={gon} />
+    </Provider>,
+    root
+  );
 };

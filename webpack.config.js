@@ -6,10 +6,9 @@ const isProduction = process.env.NODE_ENV === 'production';
 console.log('isProduction', isProduction);
 
 module.exports = {
+  devtool: 'source-map',
   mode: process.env.NODE_ENV || 'development',
-  entry: [
-    `${__dirname}/src/index.js`,
-  ],
+  entry: [`${__dirname}/src/index.js`],
   externals: {
     gon: 'gon',
   },

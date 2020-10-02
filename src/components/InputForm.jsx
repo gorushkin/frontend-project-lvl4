@@ -1,16 +1,32 @@
 import React from 'react';
 import { useFormik } from 'formik';
+import { connect } from 'react-redux';
+import addMessage from '../actions';
 
-const InputForm = () => {
+const mapStateToProps = (state) => {
+  const props = {
+    messages: state.messages,
+  };
+  return props;
+};
+
+const actionCreators = {
+  addMessage: addMessage,
+};
+
+const InputForm = (props) => {
+  const { addMessage } = props;
+
   const formik = useFormik({
     initialValues: {
       body: '',
     },
 
     onSubmit: (values) => {
-      console.log(values.body);
+      addMessage(values.body);
     },
   });
+
 
   return (
     <div className="mt-auto">
@@ -36,4 +52,5 @@ const InputForm = () => {
   );
 };
 
-export default InputForm;
+export default connect(mapStateToProps, actionCreators)(InputForm);
+
