@@ -1,16 +1,14 @@
-import { combineReducers } from 'redux';
+import { createSlice } from '@reduxjs/toolkit';
 
-const messages = (state = ['one'], action) => {
-  switch (action.type) {
-    case 'Add_MESSAGE': {
-      const { value } = action.payload;
-      return [...state, value];
-    }
-    default:
-      return state;
-  }
-}
-
-export default combineReducers({
-  messages,
+const messages = createSlice({
+  name: 'messages',
+  initialState: ['one', 'two'],
+  reducers: {
+    addMessage(state, action) {
+      state.push(action.payload);
+    },
+  },
 });
+
+export default messages.reducer;
+export const { addMessage } = messages.actions;

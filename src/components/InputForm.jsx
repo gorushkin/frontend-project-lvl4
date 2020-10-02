@@ -1,18 +1,12 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { connect } from 'react-redux';
-import addMessage from '../actions';
-
-const mapStateToProps = (state) => {
-  const props = {
-    messages: state.messages,
-  };
-  return props;
-};
+import { addMessage } from '../redusers';
 
 const actionCreators = {
-  addMessage: addMessage,
+  addMessage,
 };
+console.log('addMessage: ', addMessage);
 
 const InputForm = (props) => {
   const { addMessage } = props;
@@ -26,7 +20,6 @@ const InputForm = (props) => {
       addMessage(values.body);
     },
   });
-
 
   return (
     <div className="mt-auto">
@@ -52,5 +45,4 @@ const InputForm = (props) => {
   );
 };
 
-export default connect(mapStateToProps, actionCreators)(InputForm);
-
+export default connect(null, actionCreators)(InputForm);
