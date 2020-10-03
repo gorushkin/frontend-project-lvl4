@@ -6,7 +6,6 @@ import { addMessage } from '../redusers';
 const actionCreators = {
   addMessage,
 };
-console.log('addMessage: ', addMessage);
 
 const InputForm = (props) => {
   const { addMessage: addMessageAction } = props;

@@ -113,21 +113,22 @@ export default (app, io, defaultState = {}) => {
     })
     .post('/api/v1/channels/:channelId/messages', (req, reply) => {
       const { data: { attributes } } = req.body;
-      const message = {
-        ...attributes,
-        channelId: Number(req.params.channelId),
-        id: getNextId(),
-      };
-      state.messages.push(message);
-      reply.code(201);
-      const data = {
-        data: {
-          type: 'messages',
-          id: message.id,
-          attributes: message,
-        },
-      };
-      reply.send(data);
-      io.emit('newMessage', data);
+      console.log('req.body: ', req.body);
+      // const message = {
+      //   ...attributes,
+      //   channelId: Number(req.params.channelId),
+      //   id: getNextId(),
+      // };
+      // state.messages.push(message);
+      // reply.code(201);
+      // const data = {
+      //   data: {
+      //     type: 'messages',
+      //     id: message.id,
+      //     attributes: message,
+      //   },
+      // };
+      reply.send('asdfasdfdfdfasdfad');
+      // io.emit('newMessage', data);
     });
 };
