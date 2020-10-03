@@ -9,15 +9,16 @@ const actionCreators = {
 console.log('addMessage: ', addMessage);
 
 const InputForm = (props) => {
-  const { addMessage } = props;
+  const { addMessage: addMessageAction } = props;
 
   const formik = useFormik({
     initialValues: {
       body: '',
     },
 
-    onSubmit: (values) => {
-      addMessage(values.body);
+    onSubmit: (values, { resetForm }) => {
+      addMessageAction(values.body);
+      resetForm({ body: '' });
     },
   });
 

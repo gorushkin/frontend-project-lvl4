@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
 };
 
 const App = (props) => {
-  const { gon, messages } = props;
+  const { gon } = props;
   return (
     <div className="row h-100 pb-3">
       <LeftColumn channels={gon.channels} />
@@ -21,4 +21,3 @@ const App = (props) => {
 };
 
 export default connect(mapStateToProps)(App);
-
