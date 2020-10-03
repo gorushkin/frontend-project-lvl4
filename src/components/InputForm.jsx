@@ -3,9 +3,10 @@ import { useFormik } from 'formik';
 import { connect } from 'react-redux';
 import { addMessage } from '../redusers/messages';
 
-const mapStateToProps = ({ channels }) => {
+const mapStateToProps = ({ channels, messages }) => {
   const props = {
     currentChannelId: channels.currentChannelId,
+    userName: messages.userName,
   };
   return props;
 };
@@ -15,7 +16,7 @@ const actionCreators = {
 };
 
 const InputForm = (props) => {
-  const { addMessage: addMessageAction, currentChannelId } = props;
+  const { addMessage: addMessageAction, currentChannelId, userName } = props;
 
   const formik = useFormik({
     initialValues: {
@@ -23,7 +24,7 @@ const InputForm = (props) => {
     },
 
     onSubmit: (values, { resetForm }) => {
-      addMessageAction(values.body, currentChannelId);
+      addMessageAction(values.body, currentChannelId, userName);
       resetForm({ body: '' });
     },
   });

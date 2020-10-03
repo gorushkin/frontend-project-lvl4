@@ -5,13 +5,17 @@ import routes from '../routes';
 
 const messages = createSlice({
   name: 'messages',
-  initialState: [],
+  initialState: {
+    messageList: [],
+    userName: '',
+  },
   reducers: {
     addMessageSuccsess(state, action) {
-      state.push(action.payload.message);
+      state.messageList.push(action.payload.message);
     },
-    getAllMessages(state, { payload: { messages } }) {
-      return [...messages];
+    getAllMessages(state, { payload: { messages, userName } }) {
+      state.messageList = messages;
+      state.userName = userName;
     },
   },
 });
@@ -19,8 +23,8 @@ const messages = createSlice({
 export default messages.reducer;
 export const { addMessageSuccsess, getAllMessages } = messages.actions;
 
-export const addMessage = (message, channelId) => async (dispatch) => {
+export const addMessage = (message, channelId, userName) => async (dispatch) => {
   const url = routes.channelMessagesPath(channelId);
-  const response = await axios.post(url, { data: { attributes: { message } } });
+  const response = await axios.post(url, { data: { attributes: { message, userName } } });
   dispatch(addMessageSuccsess({ message: response.data.data.attributes }));
 };

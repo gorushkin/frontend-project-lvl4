@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
   const props = {
-    messages: state.messages,
+    messages: state.messages.messageList,
     currentChannelId: state.channels.currentChannelId,
   };
   return props;
@@ -17,7 +17,10 @@ const Messages = (props) => {
         .filter((item) => item.channelId === currentChannelId)
         .map((item) => (
           <div key={item.id}>
-            <b>Name:</b>
+            <b>
+              {item.userName}
+              :
+            </b>
             {' '}
             {item.message}
           </div>
