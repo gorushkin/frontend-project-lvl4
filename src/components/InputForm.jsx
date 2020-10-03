@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { connect } from 'react-redux';
-import { addMessage } from '../redusers';
+import { addMessage } from '../redusers/messages';
 
 const actionCreators = {
   addMessage,

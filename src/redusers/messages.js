@@ -10,11 +10,14 @@ const messages = createSlice({
     addMessageSuccsess(state, action) {
       state.push(action.payload.message);
     },
+    getAllMessages(state, { payload: { messages } }) {
+      return [...messages];
+    },
   },
 });
 
 export default messages.reducer;
-export const { addMessageSuccsess, addMessageRequest, addMessageFailure } = messages.actions;
+export const { addMessageSuccsess, getAllMessages } = messages.actions;
 
 export const addMessage = (message) => async (dispatch) => {
   const url = routes.channelMessagesPath(1);

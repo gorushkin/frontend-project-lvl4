@@ -1,4 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+const mapStateToProps = (state) => {
+  const props = {
+    channels: state.channels,
+  };
+  return props;
+};
 
 const channel = ({ id, name }) => (
   <li key={id} className="nav-item">
@@ -11,7 +19,7 @@ const channel = ({ id, name }) => (
   </li>
 );
 
-export default ({ channels }) => (
+const LeftColumn = ({ channels }) => (
   <div className="col-3 border-right">
     <div className="d-flex mb-2">
       <span>Channels</span>
@@ -24,3 +32,5 @@ export default ({ channels }) => (
     </ul>
   </div>
 );
+
+export default connect(mapStateToProps)(LeftColumn);
