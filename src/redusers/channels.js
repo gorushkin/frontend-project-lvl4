@@ -5,19 +5,21 @@ import routes from '../routes';
 
 const channels = createSlice({
   name: 'channels',
-  initialState: [],
+  initialState: {
+    channels: [],
+    currentChannelId: '',
+  },
   reducers: {
-    getAllChannels(state, { payload: { channels } }) {
-      return channels;
+    getAllChannels(state, { payload }) {
+      const { channels, currentChannelId } = payload;
+      state.channels = channels;
+      state.currentChannelId = currentChannelId;
+    },
+    changeChannel(state, { payload }) {
+      state.currentChannelId = payload.id;
     },
   },
 });
 
 export default channels.reducer;
-export const { getAllChannels } = channels.actions;
-
-export const addMessage = (message) => async (dispatch) => {
-  const url = routes.channelMessagesPath(1);
-  const response = await axios.post(url, { data: { attributes: { message } } });
-  dispatch(addMessageSuccsess({ message: response.data.data.attributes }));
-};
+export const { getAllChannels, changeChannel } = channels.actions;

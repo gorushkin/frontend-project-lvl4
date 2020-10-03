@@ -3,12 +3,19 @@ import { useFormik } from 'formik';
 import { connect } from 'react-redux';
 import { addMessage } from '../redusers/messages';
 
+const mapStateToProps = ({ channels }) => {
+  const props = {
+    currentChannelId: channels.currentChannelId,
+  };
+  return props;
+};
+
 const actionCreators = {
   addMessage,
 };
 
 const InputForm = (props) => {
-  const { addMessage: addMessageAction } = props;
+  const { addMessage: addMessageAction, currentChannelId } = props;
 
   const formik = useFormik({
     initialValues: {
@@ -16,7 +23,7 @@ const InputForm = (props) => {
     },
 
     onSubmit: (values, { resetForm }) => {
-      addMessageAction(values.body);
+      addMessageAction(values.body, currentChannelId);
       resetForm({ body: '' });
     },
   });
@@ -45,4 +52,4 @@ const InputForm = (props) => {
   );
 };
 
-export default connect(null, actionCreators)(InputForm);
+export default connect(mapStateToProps, actionCreators)(InputForm);

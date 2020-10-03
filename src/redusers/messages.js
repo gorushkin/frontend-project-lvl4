@@ -19,8 +19,8 @@ const messages = createSlice({
 export default messages.reducer;
 export const { addMessageSuccsess, getAllMessages } = messages.actions;
 
-export const addMessage = (message) => async (dispatch) => {
-  const url = routes.channelMessagesPath(1);
+export const addMessage = (message, channelId) => async (dispatch) => {
+  const url = routes.channelMessagesPath(channelId);
   const response = await axios.post(url, { data: { attributes: { message } } });
   dispatch(addMessageSuccsess({ message: response.data.data.attributes }));
 };

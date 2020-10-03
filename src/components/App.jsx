@@ -1,10 +1,10 @@
 import React from 'react';
-import LeftColumn from './LeftColumn';
+import Channels from './Channels';
 import RightColumn from './RightColumn';
 
 const App = () => (
   <div className="row h-100 pb-3">
-    <LeftColumn />
+    <Channels />
     <RightColumn />
   </div>
 );
