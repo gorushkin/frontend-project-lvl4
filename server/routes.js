@@ -32,6 +32,10 @@ const buildState = (defaultState) => {
 export default (app, io, defaultState = {}) => {
   const state = buildState(defaultState);
 
+  io.on('connection', (socket) => {
+    console.log('a user connected');
+  });
+
   app
     .get('/', (_req, reply) => {
       reply.view('index.pug', { gon: state });
@@ -112,7 +116,6 @@ export default (app, io, defaultState = {}) => {
       reply.send(response);
     })
     .post('/api/v1/channels/:channelId/messages', (req, reply) => {
-      console.log('req: ', req.params);
       const { data: { attributes } } = req.body;
       console.log(req.params.channelId);
       const message = {
@@ -130,6 +133,7 @@ export default (app, io, defaultState = {}) => {
         },
       };
       reply.send(data);
-      io.emit('newMessage', data);
+      // io.emit('newMessage', data);
+      io.emit('newMessage', 'hi, man!!!');
     });
 };
