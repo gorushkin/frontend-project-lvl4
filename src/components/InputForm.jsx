@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
 import { useFormik } from 'formik';
 import { connect } from 'react-redux';
 import { addMessage } from '../redusers/messages';
+import userNameContext from './context';
 
-const mapStateToProps = ({ channels, messages }) => {
+const mapStateToProps = ({ channels }) => {
   const props = {
     currentChannelId: channels.currentChannelId,
-    userName: messages.userName,
   };
   return props;
 };
@@ -16,7 +17,8 @@ const actionCreators = {
 };
 
 const InputForm = (props) => {
-  const { addMessage: addMessageAction, currentChannelId, userName } = props;
+  const userName = useContext(userNameContext);
+  const { addMessage: addMessageAction, currentChannelId } = props;
 
   const formik = useFormik({
     initialValues: {

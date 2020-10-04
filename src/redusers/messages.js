@@ -7,15 +7,13 @@ const messages = createSlice({
   name: 'messages',
   initialState: {
     messageList: [],
-    userName: '',
   },
   reducers: {
-    addMessageSuccsess(state, action) {
-      state.messageList.push(action.payload.message);
+    addMessageSuccsess(state, { payload: { message } }) {
+      state.messageList.push(message);
     },
-    getAllMessages(state, { payload: { messages, userName } }) {
+    getAllMessages(state, { payload: { messages } }) {
       state.messageList = messages;
-      state.userName = userName;
     },
   },
 });

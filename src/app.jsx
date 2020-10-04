@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import App from './components/App';
 import messages, { getAllMessages } from './redusers/messages';
 import channels, { getAllChannels } from './redusers/channels';
+import userName from './components/context';
 
 export default (gon) => {
   const rootReducer = combineReducers({
@@ -22,7 +23,9 @@ export default (gon) => {
   const root = document.getElementById('chat');
   ReactDOM.render(
     <Provider store={store}>
-      <App />
+      <userName.Provider value={userName}>
+        <App />
+      </userName.Provider>
     </Provider>,
     root,
   );
