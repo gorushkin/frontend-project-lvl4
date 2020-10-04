@@ -23,7 +23,7 @@ export default (gon) => {
   const root = document.getElementById('chat');
   ReactDOM.render(
     <Provider store={store}>
-      <userName.Provider value={userName}>
+      <userName.Provider value={gon.userName}>
         <App />
       </userName.Provider>
     </Provider>,
