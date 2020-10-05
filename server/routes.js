@@ -32,10 +32,6 @@ const buildState = (defaultState) => {
 export default (app, io, defaultState = {}) => {
   const state = buildState(defaultState);
 
-  io.on('connection', (socket) => {
-    console.log('a user connected');
-  });
-
   app
     .get('/', (_req, reply) => {
       reply.view('index.pug', { gon: state });

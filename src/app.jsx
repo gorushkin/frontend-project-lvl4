@@ -26,7 +26,6 @@ export default (gon) => {
       data: { attributes },
     } = data;
     if (attributes.userName !== gon.userName) {
-      console.log('in if');
       store.dispatch(addMessageSuccsess({ message: attributes }));
     }
   });
