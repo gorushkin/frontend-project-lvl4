@@ -40,6 +40,7 @@ const InputForm = ({ addMessage: addMessageAction, currentChannelId }) => {
               aria-label="body"
               className="mr-2 form-control"
               value={formik.values.body}
+              disabled={formik.isSubmitting}
             />
             <button
               disabled={formik.isSubmitting}
