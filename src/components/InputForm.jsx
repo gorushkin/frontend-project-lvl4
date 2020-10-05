@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { Formik, Field, Form } from 'formik';
+import { useFormik } from 'formik';
 import { connect } from 'react-redux';
 import { addMessage } from '../redusers/messages';
 import userNameContext from './context';
@@ -19,40 +19,40 @@ const actionCreators = {
 const InputForm = ({ addMessage: addMessageAction, currentChannelId }) => {
   const userName = useContext(userNameContext);
 
+  const formik = useFormik({
+    initialValues: {
+      body: '',
+    },
+
+    onSubmit: (values, { resetForm }) => addMessageAction(values.body, currentChannelId, userName)
+      .then(() => resetForm()),
+  });
+
   return (
     <div className="mt-auto">
-      <Formik
-        initialValues={{ body: '' }}
-        onSubmit={
-          async (values, { resetForm }) => addMessageAction(values.body, currentChannelId, userName)
-            .then(() => resetForm())
-        }
-      >
-        {({ isSubmitting }) => (
-          <Form noValidate="" className="" _lpchecked="1">
-            <div className="form-group">
-              <div className="input-group">
-                <Field
-                  disabled={isSubmitting}
-                  id="message"
-                  name="body"
-                  aria-label="body"
-                  className="mr-2 form-control"
-                />
-                <button
-                  aria-label="submit"
-                  type="submit"
-                  className="btn btn-primary"
-                  disabled={isSubmitting}
-                >
-                  Submit
-                </button>
-                <div className="d-block invalid-feedback">&nbsp;</div>
-              </div>
-            </div>
-          </Form>
-        )}
-      </Formik>
+      <form onSubmit={formik.handleSubmit} noValidate="" className="" _lpchecked="1">
+        <div className="form-group">
+          <div className="input-group">
+            <input
+              id="message"
+              onChange={formik.handleChange}
+              name="body"
+              aria-label="body"
+              className="mr-2 form-control"
+              value={formik.values.body}
+            />
+            <button
+              disabled={formik.isSubmitting}
+              aria-label="submit"
+              type="submit"
+              className="btn btn-primary"
+            >
+              Submit
+            </button>
+            <div className="d-block invalid-feedback">&nbsp;</div>
+          </div>
+        </div>
+      </form>
     </div>
   );
 };
