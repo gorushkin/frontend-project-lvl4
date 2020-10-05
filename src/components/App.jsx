@@ -8,5 +8,4 @@ const App = () => (
     <RightColumn />
   </div>
 );
-
 export default App;

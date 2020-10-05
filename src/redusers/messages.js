@@ -19,7 +19,7 @@ const messages = createSlice({
 });
 
 export default messages.reducer;
-export const { addMessageSuccsess, getAllMessages } = messages.actions;
+export const { addMessageFromSocket, addMessageSuccsess, getAllMessages } = messages.actions;
 
 export const addMessage = (message, channelId, userName) => async (dispatch) => {
   const url = routes.channelMessagesPath(channelId);

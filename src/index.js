@@ -5,7 +5,6 @@ import 'regenerator-runtime/runtime';
 import faker from 'faker';
 import cookies from 'js-cookie';
 import gon from 'gon';
-import io from 'socket.io-client';
 import app from './app';
 
 import '../assets/application.scss';
@@ -20,10 +19,6 @@ gon.userName = cookies.get('name');
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
-
-const socket = io();
-
-socket.on('newMessage', (msg) => console.log(msg));
 
 console.log('it works!');
 console.log('gon', gon);
