@@ -39,23 +39,19 @@ const channel = (
     changeChannel({ id });
   };
 
-  const onSelect = (eventKey) => {
-    // console.log(eventKey);
-  };
-
   if (removable) {
     return (
       <Nav.Item as="li" key={id}>
-        <Dropdown onSelect={onSelect} className="d-flex mb-2" as={ButtonGroup}>
-          <Button onClick={changeChannelHendler(id)} className={btnClass} variant={btnColor}>
+        <Dropdown className="d-flex mb-2" as={ButtonGroup}>
+          <Button onClick={changeChannelHendler(id)} variant={btnColor}>
             {name}
           </Button>
           <Dropdown.Toggle split variant={btnColor} id="dropdown-split-basic" />
           <Dropdown.Menu>
-            <Dropdown.Item onSelect={removelHandler(id)} href="#">
+            <Dropdown.Item active={false} onClick={removelHandler(id)} href="#/action-1">
               Remove
             </Dropdown.Item>
-            <Dropdown.Item onClick={renamelHandler(id, name)} href="#">
+            <Dropdown.Item active={false} onClick={renamelHandler(id, name)} href="#/action-2">
               Rename
             </Dropdown.Item>
           </Dropdown.Menu>
