@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useFormik } from 'formik';
 import {
@@ -10,8 +10,11 @@ const actionCreators = {
   addChannelAction: addChannel,
 };
 
-const AddChannelModal = (props) => {
-  const { onHide, addChannelAction } = props;
+const AddChannelModal = ({ onHide, addChannelAction }) => {
+  const inputRef = useRef();
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [null]);
 
   const formik = useFormik({
     initialValues: { name: '' },
@@ -32,6 +35,7 @@ const AddChannelModal = (props) => {
             <FormControl
               onChange={formik.handleChange}
               required
+              ref={inputRef}
               name="name"
               className="mb-2"
               value={formik.values.name}

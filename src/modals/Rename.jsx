@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useFormik } from 'formik';
 import {
@@ -10,8 +10,12 @@ const actionCreators = {
   renameChannelAction: renameChannel,
 };
 
-const AddChannelModal = (props) => {
-  const { onHide, renameChannelAction, item } = props;
+const AddChannelModal = ({ onHide, renameChannelAction, item }) => {
+  const inputRef = useRef();
+  useEffect(() => {
+    inputRef.current.select();
+  }, [null]);
+
   const { id, name } = item;
 
   const formik = useFormik({
@@ -36,6 +40,7 @@ const AddChannelModal = (props) => {
               name="name"
               className="mb-2"
               value={formik.values.name}
+              ref={inputRef}
             />
             <div className="d-flex justify-content-end">
               <Button onClick={onHide} type="button" variant="secondary" className="mr-2">
