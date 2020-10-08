@@ -41,7 +41,6 @@ const channel = (
     return (
       <Nav.Item as="li" key={id}>
         <Dropdown
-          onToggle={() => console.log('toggle')}
           className="d-flex mb-2"
           as={ButtonGroup}
         >

@@ -25,7 +25,7 @@ const AddChannelModal = ({ onHide, addChannelAction }) => {
   });
 
   return (
-    <Modal onHide={onHide} show>
+    <Modal restoreFocus={false} onHide={onHide} show>
       <Modal.Header closeButton>
         <Modal.Title>Add channel</Modal.Title>
       </Modal.Header>
