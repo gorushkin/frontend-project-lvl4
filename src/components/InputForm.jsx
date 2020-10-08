@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import { connect } from 'react-redux';
 import { addMessage } from '../redusers/messages';
-import userNameContext from './context';
+import userNameContext from '../context';
 
 const mapStateToProps = ({ channels }) => {
   const props = {

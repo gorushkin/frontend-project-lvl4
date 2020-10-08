@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import cn from 'classnames';
-import { changeChannel } from '../redusers/channels';
+import { changeChannel, addChannel } from '../redusers/channels';
+import getModals from '../modals';
 
 const mapStateToProps = ({ channels }) => {
   const props = {
@@ -34,18 +35,38 @@ const channel = ({ id, name }, currentChannelId, changeChannel) => {
   );
 };
 
-const Channels = ({ channels, currentChannelId, changeChannel }) => (
-  <div className="col-3 border-right">
-    <div className="d-flex mb-2">
-      <span>Channels</span>
-      <button type="button" className="ml-auto p-0 btn btn-link">
-        +
-      </button>
+const renderModal = ({ type }, hideModal) => {
+  if (!type) {
+    return null;
+  }
+
+  const Component = getModals(type);
+  return <Component onHide={hideModal} />;
+};
+
+const Channels = ({ channels, currentChannelId, changeChannel }) => {
+  const [modalInfo, setModalInfo] = useState({ type: 'adding' });
+  // const [showModal, setShowModal] = useState(false);
+  const hideModal = () => setModalInfo({ type: null, item: null });
+
+  const addChannelHandler = () => {
+    setModalInfo({ type: 'adding' });
+  };
+
+  return (
+    <div className="col-3 border-right">
+      <div className="d-flex mb-2">
+        <span>Channels</span>
+        <button onClick={addChannelHandler} type="button" className="ml-auto p-0 btn btn-link">
+          +
+        </button>
+      </div>
+      <ul className="nav flex-column nav-pills nav-fill">
+        {channels.map((item) => channel(item, currentChannelId, changeChannel))}
+      </ul>
+      {renderModal(modalInfo, hideModal)}
     </div>
-    <ul className="nav flex-column nav-pills nav-fill">
-      {channels.map((item) => channel(item, currentChannelId, changeChannel))}
-    </ul>
-  </div>
-);
+  );
+};
 
 export default connect(mapStateToProps, actionCreators)(Channels);

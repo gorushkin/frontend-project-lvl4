@@ -54,6 +54,7 @@ export default (app, io, defaultState = {}) => {
         removable: true,
         id: getNextId(),
       };
+      console.log('server', name);
       state.channels.push(channel);
       reply.code(201);
       const data = {
