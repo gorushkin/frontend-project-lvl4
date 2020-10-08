@@ -17,7 +17,7 @@ const AddChannelModal = (props) => {
   };
 
   return (
-    <Modal show>
+    <Modal onHide={onHide} show>
       <Modal.Header closeButton>
         <Modal.Title>Remove channel</Modal.Title>
       </Modal.Header>

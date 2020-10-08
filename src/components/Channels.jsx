@@ -19,7 +19,13 @@ const actionCreators = {
   changeChannel,
 };
 
-const channel = ({ id, name, removable }, currentChannelId, changeChannel, removelHandler) => {
+const channel = (
+  { id, name, removable },
+  currentChannelId,
+  changeChannel,
+  removelHandler,
+  renamelHandler,
+) => {
   const btnClass = 'nav-link text-left  btn-block';
 
   const btnClassTemp = cn('nav-link text-left', {
@@ -45,11 +51,11 @@ const channel = ({ id, name, removable }, currentChannelId, changeChannel, remov
             {name}
           </Button>
           <Dropdown.Toggle split variant={btnColor} id="dropdown-split-basic" />
-          <Dropdown.Menu rootCloseEvent="mousedown">
+          <Dropdown.Menu>
             <Dropdown.Item onSelect={removelHandler(id)} href="#">
               Remove
             </Dropdown.Item>
-            <Dropdown.Item onClick={() => console.log('onClick')} href="#">
+            <Dropdown.Item onClick={renamelHandler(id, name)} href="#">
               Rename
             </Dropdown.Item>
           </Dropdown.Menu>
@@ -88,6 +94,10 @@ const Channels = ({ channels, currentChannelId, changeChannel }) => {
     setModalInfo({ type: 'removing', item: { id } });
   };
 
+  const renamelHandler = (id, name) => () => {
+    setModalInfo({ type: 'renaming', item: { id, name } });
+  };
+
   return (
     <div className="col-3 border-right">
       <div className="d-flex mb-2">
@@ -97,7 +107,7 @@ const Channels = ({ channels, currentChannelId, changeChannel }) => {
         </button>
       </div>
       <Nav variant="pills" className="flex-column nav-fill">
-        {channels.map((item) => channel(item, currentChannelId, changeChannel, removelHandler))}
+        {channels.map((item) => channel(item, currentChannelId, changeChannel, removelHandler, renamelHandler))}
       </Nav>
       {renderModal(modalInfo, hideModal)}
     </div>

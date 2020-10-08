@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { useFormik } from 'formik';
-import { Modal, FormGroup, FormControl } from 'react-bootstrap';
+import {
+  Modal, FormGroup, FormControl, Button,
+} from 'react-bootstrap';
 import { addChannel } from '../redusers/channels';
 
 const actionCreators = {
@@ -20,8 +22,8 @@ const AddChannelModal = (props) => {
   });
 
   return (
-    <Modal show>
-      <Modal.Header closeButton onHide={onHide}>
+    <Modal onHide={onHide} show>
+      <Modal.Header closeButton>
         <Modal.Title>Add channel</Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -35,12 +37,12 @@ const AddChannelModal = (props) => {
               value={formik.values.name}
             />
             <div className="d-flex justify-content-end">
-              <button onClick={onHide} type="button" className="mr-2 btn btn-secondary">
+              <Button onClick={onHide} type="button" variant="secondary" className="mr-2">
                 Cancel
-              </button>
-              <button type="submit" className="btn btn-primary">
+              </Button>
+              <Button type="submit" variant="primary">
                 Submit
-              </button>
+              </Button>
             </div>
           </FormGroup>
         </form>

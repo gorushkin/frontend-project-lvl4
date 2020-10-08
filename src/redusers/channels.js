@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import _ from 'lodash';
 
 import routes from '../routes';
 
@@ -27,6 +28,11 @@ const channels = createSlice({
       const updatedChannelsList = state.channels.filter((item) => item.id !== id);
       state.channels = updatedChannelsList;
     },
+    renameChannelSuccsess(state, { payload }) {
+      const { name, id } = payload.channel;
+      const itemIndex = _.findIndex(state.channels, { id });
+      state.channels[itemIndex] = { ...state.channels[itemIndex], name };
+    },
   },
 });
 
@@ -36,6 +42,7 @@ export const {
   changeChannel,
   addChannelSuccsess,
   removeChannelSuccsess,
+  renameChannelSuccsess,
 } = channels.actions;
 
 export const addChannel = (name) => async () => {
@@ -46,4 +53,9 @@ export const addChannel = (name) => async () => {
 export const removeChannel = (id) => async () => {
   const url = routes.channelPath(id);
   await axios.delete(url);
+};
+
+export const renameChannel = (name, id) => async () => {
+  const url = routes.channelPath(id);
+  await axios.patch(url, { data: { attributes: { name } } });
 };
