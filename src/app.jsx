@@ -4,7 +4,7 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import App from './components/App';
 import messages, { getAllMessages, addMessageSuccsess } from './redusers/messages';
-import channels, { getAllChannels, addChannelSuccsess } from './redusers/channels';
+import channels, { getAllChannels, addChannelSuccsess, removeChannelSuccsess } from './redusers/channels';
 import userName from './context';
 import socket from './socket';
 
@@ -35,6 +35,13 @@ export default (gon) => {
       data: { attributes },
     } = data;
     store.dispatch(addChannelSuccsess({ channel: attributes }));
+  });
+
+  socket.on('removeChannel', (data) => {
+    const {
+      data: { id },
+    } = data;
+    store.dispatch(removeChannelSuccsess({ id }));
   });
 
   const root = document.getElementById('chat');

@@ -20,16 +20,30 @@ const channels = createSlice({
     },
     addChannelSuccsess(state, { payload }) {
       const { id, name, removable } = payload.channel;
-      console.log('payload.channel: ', payload.channel);
       state.channels.push({ id, name, removable });
+    },
+    removeChannelSuccsess(state, { payload }) {
+      const { id } = payload;
+      const updatedChannelsList = state.channels.filter((item) => item.id !== id);
+      state.channels = updatedChannelsList;
     },
   },
 });
 
 export default channels.reducer;
-export const { getAllChannels, changeChannel, addChannelSuccsess } = channels.actions;
+export const {
+  getAllChannels,
+  changeChannel,
+  addChannelSuccsess,
+  removeChannelSuccsess,
+} = channels.actions;
 
 export const addChannel = (name) => async () => {
   const url = routes.channelsPath();
   await axios.post(url, { data: { attributes: { name } } });
+};
+
+export const removeChannel = (id) => async () => {
+  const url = routes.channelPath(id);
+  await axios.delete(url);
 };
