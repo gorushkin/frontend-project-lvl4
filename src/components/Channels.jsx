@@ -26,9 +26,7 @@ const channel = (
   removelHandler,
   renamelHandler,
 ) => {
-  const btnClass = 'nav-link text-left  btn-block';
-
-  const btnClassTemp = cn('nav-link text-left', {
+  const btnClass = cn('nav-link text-left', {
     'btn-block mb-2': !removable,
     'flex-grow-1': removable,
   });
@@ -42,16 +40,25 @@ const channel = (
   if (removable) {
     return (
       <Nav.Item as="li" key={id}>
-        <Dropdown className="d-flex mb-2" as={ButtonGroup}>
-          <Button onClick={changeChannelHendler(id)} variant={btnColor}>
+        <Dropdown
+          onToggle={() => console.log('toggle')}
+          className="d-flex mb-2"
+          as={ButtonGroup}
+        >
+          <Button onClick={changeChannelHendler(id)} variant={btnColor} className={btnClass}>
             {name}
           </Button>
-          <Dropdown.Toggle split variant={btnColor} id="dropdown-split-basic" />
+          <Dropdown.Toggle
+            className="flex-grow-0"
+            split
+            variant={btnColor}
+            id="dropdown-split-basic"
+          />
           <Dropdown.Menu>
-            <Dropdown.Item active={false} onClick={removelHandler(id)} href="#/action-1">
+            <Dropdown.Item active={false} onClick={removelHandler(id)} href="#">
               Remove
             </Dropdown.Item>
-            <Dropdown.Item active={false} onClick={renamelHandler(id, name)} href="#/action-2">
+            <Dropdown.Item active={false} onClick={renamelHandler(id, name)} href="#">
               Rename
             </Dropdown.Item>
           </Dropdown.Menu>
@@ -62,7 +69,7 @@ const channel = (
 
   return (
     <Nav.Item as="li" key={id}>
-      <Button onClick={changeChannelHendler(id)} className={btnClassTemp} variant={btnColor}>
+      <Button onClick={changeChannelHendler(id)} className={btnClass} variant={btnColor}>
         {name}
       </Button>
     </Nav.Item>
