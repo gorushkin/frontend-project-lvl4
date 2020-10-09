@@ -20,7 +20,4 @@ if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-console.log('it works!');
-console.log('gon', gon);
-
 app(gon);
