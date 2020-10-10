@@ -5,12 +5,13 @@ import {
   Modal, FormGroup, FormControl, Button,
 } from 'react-bootstrap';
 import { addChannel } from '../redusers/channels';
+import validationSchema from './channelNameValidation';
 
 const actionCreators = {
   addChannelAction: addChannel,
 };
 
-const AddChannelModal = ({ onHide, addChannelAction }) => {
+const AddChannelModal = ({ onHide, addChannelAction, item }) => {
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
@@ -18,6 +19,7 @@ const AddChannelModal = ({ onHide, addChannelAction }) => {
 
   const formik = useFormik({
     initialValues: { name: '' },
+    validationSchema: validationSchema(item.channels),
     onSubmit: ({ name }) => {
       addChannelAction(name);
       onHide();
@@ -30,16 +32,19 @@ const AddChannelModal = ({ onHide, addChannelAction }) => {
         <Modal.Title>Add channel</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <form noValidate="" className="" _lpchecked="1" onSubmit={formik.handleSubmit}>
+        <form className="" _lpchecked="1" onSubmit={formik.handleSubmit}>
           <FormGroup>
             <FormControl
               onChange={formik.handleChange}
-              required
               ref={inputRef}
               name="name"
               className="mb-2"
               value={formik.values.name}
+              isInvalid={!!formik.errors.name}
             />
+            {formik.errors.name ? (
+              <div className="d-block mb-2 invalid-feedback">{formik.errors.name}</div>
+            ) : null}
             <div className="d-flex justify-content-end">
               <Button onClick={onHide} type="button" variant="secondary" className="mr-2">
                 Cancel

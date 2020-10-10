@@ -29,7 +29,7 @@ const channel = (
 
   const btnColor = currentChannelId === id ? 'primary' : 'light';
 
-  const changeChannelHendler = () => {
+  const changeChannelHandler = () => {
     changeChannelAction({ id });
   };
 
@@ -37,7 +37,7 @@ const channel = (
     return (
       <Nav.Item as="li" key={id}>
         <Dropdown className="d-flex mb-2" as={ButtonGroup}>
-          <Button onClick={changeChannelHendler} variant={btnColor} className={btnClass}>
+          <Button onClick={changeChannelHandler} variant={btnColor} className={btnClass}>
             {name}
           </Button>
           <Dropdown.Toggle
@@ -61,7 +61,7 @@ const channel = (
 
   return (
     <Nav.Item as="li" key={id}>
-      <Button onClick={changeChannelHendler} className={btnClass} variant={btnColor}>
+      <Button onClick={changeChannelHandler} className={btnClass} variant={btnColor}>
         {name}
       </Button>
     </Nav.Item>
@@ -82,7 +82,7 @@ const Channels = ({ channels, currentChannelId, changeChannelAction }) => {
   const hideModal = () => setModalInfo({ type: null, item: null });
 
   const addChannelHandler = () => {
-    setModalInfo({ type: 'adding' });
+    setModalInfo({ type: 'adding', item: { channels } });
   };
 
   const removelHandler = (id) => () => {
@@ -90,7 +90,7 @@ const Channels = ({ channels, currentChannelId, changeChannelAction }) => {
   };
 
   const renamelHandler = (id, name) => () => {
-    setModalInfo({ type: 'renaming', item: { id, name } });
+    setModalInfo({ type: 'renaming', item: { id, name, channels } });
   };
 
   return (

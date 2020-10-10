@@ -5,6 +5,7 @@ import {
   Modal, FormGroup, FormControl, Button,
 } from 'react-bootstrap';
 import { renameChannel } from '../redusers/channels';
+import validationSchema from './channelNameValidation';
 
 const actionCreators = {
   renameChannelAction: renameChannel,
@@ -20,6 +21,7 @@ const AddChannelModal = ({ onHide, renameChannelAction, item }) => {
 
   const formik = useFormik({
     initialValues: { name },
+    validationSchema: validationSchema(item.channels),
     onSubmit: (values) => {
       renameChannelAction(values.name, id);
       onHide();
@@ -41,7 +43,11 @@ const AddChannelModal = ({ onHide, renameChannelAction, item }) => {
               className="mb-2"
               value={formik.values.name}
               ref={inputRef}
+              isInvalid={!!formik.errors.name}
             />
+            {formik.errors.name ? (
+              <div className="d-block mb-2 invalid-feedback">{formik.errors.name}</div>
+            ) : null}
             <div className="d-flex justify-content-end">
               <Button onClick={onHide} type="button" variant="secondary" className="mr-2">
                 Cancel
