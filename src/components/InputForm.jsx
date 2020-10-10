@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 
 import { useFormik } from 'formik';
 import { connect } from 'react-redux';
@@ -19,13 +19,20 @@ const actionCreators = {
 const InputForm = ({ addMessage: addMessageAction, currentChannelId }) => {
   const userName = useContext(userNameContext);
 
+  const inputRef = useRef();
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [null]);
+
   const formik = useFormik({
     initialValues: {
       body: '',
     },
 
     onSubmit: (values, { resetForm }) => addMessageAction(values.body, currentChannelId, userName)
-      .then(() => resetForm()),
+      .then(() => resetForm())
+      .then(() => inputRef.current.focus()),
   });
 
   return (
@@ -37,6 +44,7 @@ const InputForm = ({ addMessage: addMessageAction, currentChannelId }) => {
               id="message"
               onChange={formik.handleChange}
               name="body"
+              ref={inputRef}
               aria-label="body"
               className="mr-2 form-control"
               value={formik.values.body}
