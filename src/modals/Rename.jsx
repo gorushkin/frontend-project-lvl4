@@ -20,8 +20,8 @@ const AddChannelModal = ({ onHide, renameChannelAction, item }) => {
 
   const formik = useFormik({
     initialValues: { name },
-    onSubmit: ({ name }) => {
-      renameChannelAction(name, id);
+    onSubmit: (values) => {
+      renameChannelAction(values.name, id);
       onHide();
     },
   });

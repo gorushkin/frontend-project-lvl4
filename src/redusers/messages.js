@@ -10,11 +10,11 @@ const messages = createSlice({
     messageList: [],
   },
   reducers: {
-    addMessageSuccsess(state, { payload: { message } }) {
-      state.messageList.push(message);
+    addMessageSuccsess(state, { payload }) {
+      state.messageList.push(payload.message);
     },
-    getAllMessages(state, { payload: { messages } }) {
-      state.messageList = messages;
+    getAllMessages(state, { payload }) {
+      state.messageList = payload.messages;
     },
   },
   extraReducers: {

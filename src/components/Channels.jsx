@@ -15,14 +15,10 @@ const mapStateToProps = ({ channels }) => {
   return props;
 };
 
-const actionCreators = {
-  changeChannel,
-};
-
 const channel = (
   { id, name, removable },
   currentChannelId,
-  changeChannel,
+  changeChannelAction,
   removelHandler,
   renamelHandler,
 ) => {
@@ -33,18 +29,15 @@ const channel = (
 
   const btnColor = currentChannelId === id ? 'primary' : 'light';
 
-  const changeChannelHendler = (id) => () => {
-    changeChannel({ id });
+  const changeChannelHendler = () => {
+    changeChannelAction({ id });
   };
 
   if (removable) {
     return (
       <Nav.Item as="li" key={id}>
-        <Dropdown
-          className="d-flex mb-2"
-          as={ButtonGroup}
-        >
-          <Button onClick={changeChannelHendler(id)} variant={btnColor} className={btnClass}>
+        <Dropdown className="d-flex mb-2" as={ButtonGroup}>
+          <Button onClick={changeChannelHendler} variant={btnColor} className={btnClass}>
             {name}
           </Button>
           <Dropdown.Toggle
@@ -68,7 +61,7 @@ const channel = (
 
   return (
     <Nav.Item as="li" key={id}>
-      <Button onClick={changeChannelHendler(id)} className={btnClass} variant={btnColor}>
+      <Button onClick={changeChannelHendler} className={btnClass} variant={btnColor}>
         {name}
       </Button>
     </Nav.Item>
@@ -84,7 +77,7 @@ const renderModal = ({ type, item }, hideModal) => {
   return <Component onHide={hideModal} item={item} />;
 };
 
-const Channels = ({ channels, currentChannelId, changeChannel }) => {
+const Channels = ({ channels, currentChannelId, changeChannelAction }) => {
   const [modalInfo, setModalInfo] = useState({ type: null });
   const hideModal = () => setModalInfo({ type: null, item: null });
 
@@ -109,11 +102,16 @@ const Channels = ({ channels, currentChannelId, changeChannel }) => {
         </button>
       </div>
       <Nav variant="pills" className="flex-column nav-fill">
-        {channels.map((item) => channel(item, currentChannelId, changeChannel, removelHandler, renamelHandler))}
+        {channels
+          .map((item) => channel(item,
+            currentChannelId,
+            changeChannelAction,
+            removelHandler,
+            renamelHandler))}
       </Nav>
       {renderModal(modalInfo, hideModal)}
     </div>
   );
 };
 
-export default connect(mapStateToProps, actionCreators)(Channels);
+export default connect(mapStateToProps, { changeChannelAction: changeChannel })(Channels);

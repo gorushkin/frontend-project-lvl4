@@ -11,7 +11,7 @@ const AddChannelModal = (props) => {
   const { onHide, removeChannelAction, item } = props;
   const { id } = item;
 
-  const removeChannelHandler = (id) => () => {
+  const removeChannelHandler = () => {
     removeChannelAction(id);
     onHide();
   };
@@ -27,7 +27,7 @@ const AddChannelModal = (props) => {
           <Button onClick={onHide} variant="secondary">
             Cancel
           </Button>
-          <Button onClick={removeChannelHandler(id)} variant="danger">
+          <Button onClick={removeChannelHandler} variant="danger">
             Confirm
           </Button>
         </div>
