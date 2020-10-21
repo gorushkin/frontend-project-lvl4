@@ -1,21 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import cookies from 'js-cookie';
 import App from './components/App';
-import { getAllMessages } from './slices/messages';
-import { getAllChannels } from './slices/channels';
 import userNameContext from './context';
 import store from './slices';
-import socket from './socket';
-import getUserName from './getUserName';
+import initApp from './init.js';
 
 export default (gon) => {
-  store.dispatch(getAllMessages(gon));
-  store.dispatch(getAllChannels(gon));
+  initApp(gon);
 
-  const userName = getUserName();
-
-  socket(store);
+  const userName = cookies.get('name');
 
   const root = document.getElementById('chat');
 

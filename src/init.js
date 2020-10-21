@@ -1,13 +1,24 @@
+import cookies from 'js-cookie';
+import faker from 'faker';
 import io from 'socket.io-client';
-
-import { addMessageSuccsess } from './slices/messages';
+import store from './slices';
+import { getAllMessages, addMessageSuccsess } from './slices/messages';
 import {
+  getAllChannels,
   addChannelSuccsess,
   removeChannelSuccsess,
   renameChannelSuccsess,
 } from './slices/channels';
 
-export default (store) => {
+export default (gon) => {
+  store.dispatch(getAllMessages(gon));
+  store.dispatch(getAllChannels(gon));
+
+  if (!cookies.get('name')) {
+    const randomName = faker.fake('{{name.firstName}} {{name.lastName}}');
+    cookies.set('name', randomName, { expires: 21 });
+  }
+
   const socket = io();
 
   socket.on('newMessage', (data) => {
