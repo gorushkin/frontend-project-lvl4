@@ -1,22 +1,20 @@
 import io from 'socket.io-client';
 
-import { addMessageSuccsess } from './redusers/messages';
+import { addMessageSuccsess } from './slices/messages';
 import {
   addChannelSuccsess,
   removeChannelSuccsess,
   renameChannelSuccsess,
-} from './redusers/channels';
+} from './slices/channels';
 
-export default (store, gon) => {
+export default (store) => {
   const socket = io();
 
   socket.on('newMessage', (data) => {
     const {
       data: { attributes },
     } = data;
-    if (attributes.userName !== gon.userName) {
-      store.dispatch(addMessageSuccsess({ message: attributes }));
-    }
+    store.dispatch(addMessageSuccsess({ message: attributes }));
   });
 
   socket.on('newChannel', (data) => {

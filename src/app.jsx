@@ -2,25 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './components/App';
-import { getAllMessages } from './redusers/messages';
-import { getAllChannels } from './redusers/channels';
-import userName from './context';
-import store from './redusers';
+import { getAllMessages } from './slices/messages';
+import { getAllChannels } from './slices/channels';
+import userNameContext from './context';
+import store from './slices';
 import socket from './socket';
+import getUserName from './getUserName';
 
 export default (gon) => {
   store.dispatch(getAllMessages(gon));
   store.dispatch(getAllChannels(gon));
 
-  socket(store, gon);
+  const userName = getUserName();
+
+  socket(store);
 
   const root = document.getElementById('chat');
 
   ReactDOM.render(
     <Provider store={store}>
-      <userName.Provider value={gon.userName}>
+      <userNameContext.Provider value={userName}>
         <App />
-      </userName.Provider>
+      </userNameContext.Provider>
     </Provider>,
     root,
   );

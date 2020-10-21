@@ -33,8 +33,7 @@ export const {
   removeMessages,
 } = messages.actions;
 
-export const addMessage = (message, channelId, userName) => async (dispatch) => {
+export const addMessage = (message, channelId, userName) => async () => {
   const url = routes.channelMessagesPath(channelId);
-  const response = await axios.post(url, { data: { attributes: { message, userName } } });
-  dispatch(addMessageSuccsess({ message: response.data.data.attributes }));
+  await axios.post(url, { data: { attributes: { message, userName } } });
 };

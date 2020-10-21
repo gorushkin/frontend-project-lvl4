@@ -4,7 +4,7 @@ import cn from 'classnames';
 import {
   Nav, Dropdown, Button, ButtonGroup,
 } from 'react-bootstrap';
-import { changeChannel } from '../redusers/channels';
+import { changeChannel } from '../slices/channels';
 import getModals from '../modals';
 
 const mapStateToProps = ({ channels }) => {

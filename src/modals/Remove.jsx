@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
-import { removeChannel } from '../redusers/channels';
+import { removeChannel } from '../slices/channels';
 
 const actionCreators = {
   removeChannelAction: removeChannel,
