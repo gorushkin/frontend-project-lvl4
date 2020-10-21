@@ -1,11 +1,11 @@
 import io from 'socket.io-client';
 
-import { addMessageSuccsess } from './redusers/messages';
+import { addMessageSuccsess } from './slices/messages';
 import {
   addChannelSuccsess,
   removeChannelSuccsess,
   renameChannelSuccsess,
-} from './redusers/channels';
+} from './slices/channels';
 
 export default (store, gon) => {
   const socket = io();

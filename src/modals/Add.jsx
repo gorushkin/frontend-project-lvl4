@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import {
   Modal, FormGroup, FormControl, Button,
 } from 'react-bootstrap';
-import { addChannel } from '../redusers/channels';
+import { addChannel } from '../slices/channels';
 import validationSchema from './channelNameValidation';
 
 const actionCreators = {

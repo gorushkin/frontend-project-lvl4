@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './components/App';
-import { getAllMessages } from './redusers/messages';
-import { getAllChannels } from './redusers/channels';
+import { getAllMessages } from './slices/messages';
+import { getAllChannels } from './slices/channels';
 import userName from './context';
-import store from './redusers';
+import store from './slices';
 import socket from './socket';
 
 export default (gon) => {
