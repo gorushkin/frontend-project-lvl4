@@ -15,7 +15,7 @@ export default (gon) => {
 
   const userName = getUserName();
 
-  socket(store, gon);
+  socket(store);
 
   const root = document.getElementById('chat');
 

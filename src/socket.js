@@ -7,16 +7,14 @@ import {
   renameChannelSuccsess,
 } from './slices/channels';
 
-export default (store, gon) => {
+export default (store) => {
   const socket = io();
 
   socket.on('newMessage', (data) => {
     const {
       data: { attributes },
     } = data;
-    if (attributes.userName !== gon.userName) {
-      store.dispatch(addMessageSuccsess({ message: attributes }));
-    }
+    store.dispatch(addMessageSuccsess({ message: attributes }));
   });
 
   socket.on('newChannel', (data) => {
