@@ -4,13 +4,16 @@ import { Provider } from 'react-redux';
 import App from './components/App';
 import { getAllMessages } from './slices/messages';
 import { getAllChannels } from './slices/channels';
-import userName from './context';
+import userNameContext from './context';
 import store from './slices';
 import socket from './socket';
+import getUserName from './getUserName';
 
 export default (gon) => {
   store.dispatch(getAllMessages(gon));
   store.dispatch(getAllChannels(gon));
+
+  const userName = getUserName();
 
   socket(store, gon);
 
@@ -18,9 +21,9 @@ export default (gon) => {
 
   ReactDOM.render(
     <Provider store={store}>
-      <userName.Provider value={gon.userName}>
+      <userNameContext.Provider value={userName}>
         <App />
-      </userName.Provider>
+      </userNameContext.Provider>
     </Provider>,
     root,
   );
