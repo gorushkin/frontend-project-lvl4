@@ -23,7 +23,7 @@ const AddChannelModal = ({ onHide, renameChannelAction, item }) => {
     initialValues: { name },
     validationSchema: validationSchema(item.channels),
     onSubmit: (values) => {
-      renameChannelAction(values.name, id);
+      renameChannelAction({ name: values.name, id });
       onHide();
     },
   });

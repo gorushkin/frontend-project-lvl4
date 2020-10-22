@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { removeChannelSuccsess } from './channels';
 
@@ -33,7 +33,7 @@ export const {
   removeMessages,
 } = messages.actions;
 
-export const addMessage = (message, channelId, userName) => async () => {
+export const addMessage = createAsyncThunk('addmessage', async ({ message, channelId, userName }) => {
   const url = routes.channelMessagesPath(channelId);
   await axios.post(url, { data: { attributes: { message, userName } } });
-};
+});

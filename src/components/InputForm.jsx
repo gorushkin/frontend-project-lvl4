@@ -30,7 +30,11 @@ const InputForm = ({ addMessage: addMessageAction, currentChannelId }) => {
       body: '',
     },
 
-    onSubmit: (values, { resetForm }) => addMessageAction(values.body, currentChannelId, userName)
+    onSubmit: (values, { resetForm }) => addMessageAction({
+      message: values.body,
+      channelId: currentChannelId,
+      userName,
+    })
       .then(() => resetForm())
       .then(() => inputRef.current.focus()),
   });

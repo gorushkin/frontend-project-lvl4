@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import _ from 'lodash';
 
@@ -45,17 +45,17 @@ export const {
   renameChannelSuccsess,
 } = channels.actions;
 
-export const addChannel = (name) => async () => {
+export const addChannel = createAsyncThunk('addchannl', async (name) => {
   const url = routes.channelsPath();
   await axios.post(url, { data: { attributes: { name } } });
-};
+});
 
-export const removeChannel = (id) => async () => {
+export const removeChannel = createAsyncThunk('removeChannel', async (id) => {
   const url = routes.channelPath(id);
   await axios.delete(url);
-};
+});
 
-export const renameChannel = (name, id) => async () => {
+export const renameChannel = createAsyncThunk('renamechannel', async ({ name, id }) => {
   const url = routes.channelPath(id);
   await axios.patch(url, { data: { attributes: { name } } });
-};
+});
