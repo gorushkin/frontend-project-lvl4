@@ -10,11 +10,12 @@ const messages = createSlice({
     messageList: [],
   },
   reducers: {
-    addMessageSuccsess(state, { payload }) {
-      state.messageList.push(payload.message);
+    addMessageSuccsess(state, { payload: { message } }) {
+      console.log('message: ', message);
+      state.messageList.push(message);
     },
-    getAllMessages(state, { payload }) {
-      state.messageList = payload.messages;
+    getAllMessages(state, { payload: { messages: allmessages } }) {
+      state.messageList = allmessages;
     },
   },
   extraReducers: {
@@ -33,7 +34,10 @@ export const {
   removeMessages,
 } = messages.actions;
 
-export const addMessage = createAsyncThunk('addmessage', async ({ message, channelId, userName }) => {
-  const url = routes.channelMessagesPath(channelId);
-  await axios.post(url, { data: { attributes: { message, userName } } });
-});
+export const addMessage = createAsyncThunk(
+  'addmessage',
+  async ({ message, channelId, userName }) => {
+    const url = routes.channelMessagesPath(channelId);
+    await axios.post(url, { data: { attributes: { message, userName } } });
+  },
+);

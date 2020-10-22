@@ -11,25 +11,25 @@ const channels = createSlice({
     currentChannelId: '',
   },
   reducers: {
-    getAllChannels(state, { payload }) {
-      const { channels: channelsList, currentChannelId } = payload;
+    getAllChannels(state, { payload: { channels: channelsList, currentChannelId } }) {
       state.channels = channelsList;
       state.currentChannelId = currentChannelId;
     },
-    changeChannel(state, { payload }) {
-      state.currentChannelId = payload.id;
+    changeChannel(state, { payload: { id } }) {
+      state.currentChannelId = id;
     },
-    addChannelSuccsess(state, { payload }) {
-      const { id, name, removable } = payload.channel;
+    addChannelSuccsess(
+      state, { payload: { channel: { id, name, removable } } },
+    ) {
       state.channels.push({ id, name, removable });
     },
-    removeChannelSuccsess(state, { payload }) {
-      const { id } = payload;
+    removeChannelSuccsess(state, { payload: { id } }) {
       const updatedChannelsList = state.channels.filter((item) => item.id !== id);
       state.channels = updatedChannelsList;
     },
-    renameChannelSuccsess(state, { payload }) {
-      const { name, id } = payload.channel;
+    renameChannelSuccsess(
+      state, { payload: { channel: { name, id } } },
+    ) {
       const itemIndex = _.findIndex(state.channels, { id });
       state.channels[itemIndex] = { ...state.channels[itemIndex], name };
     },
