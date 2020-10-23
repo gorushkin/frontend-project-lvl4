@@ -4,14 +4,10 @@ import { useFormik } from 'formik';
 import {
   Modal, FormGroup, FormControl, Button,
 } from 'react-bootstrap';
-import { addChannel } from '../slices/channels';
+import { asyncActions } from '../slices';
 import validationSchema from './channelNameValidation';
 
-const actionCreators = {
-  addChannelAction: addChannel,
-};
-
-const AddChannelModal = ({ onHide, addChannelAction, item }) => {
+const AddChannelModal = ({ onHide, addChannel, item }) => {
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
@@ -21,7 +17,7 @@ const AddChannelModal = ({ onHide, addChannelAction, item }) => {
     initialValues: { name: '' },
     validationSchema: validationSchema(item.channels),
     onSubmit: ({ name }) => {
-      addChannelAction(name);
+      addChannel(name);
       onHide();
     },
   });
@@ -60,4 +56,4 @@ const AddChannelModal = ({ onHide, addChannelAction, item }) => {
   );
 };
 
-export default connect(null, actionCreators)(AddChannelModal);
+export default connect(null, { addChannel: asyncActions.addChannel })(AddChannelModal);

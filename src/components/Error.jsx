@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Alert } from 'react-bootstrap';
-import { removeError } from '../slices/errors';
+import { actions } from '../slices';
 
 const mapStateToProps = ({ errors }) => errors;
 
@@ -14,4 +14,4 @@ const Error = ({ text, isError, removeError: removeErrorAction }) => {
   );
 };
 
-export default connect(mapStateToProps, { removeError })(Error);
+export default connect(mapStateToProps, { removeError: actions.removeError })(Error);

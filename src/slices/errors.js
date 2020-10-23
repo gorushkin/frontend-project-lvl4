@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const errors = createSlice({
+const slice = createSlice({
   name: 'errors',
   initialState: {
     text: '',
@@ -18,5 +18,7 @@ const errors = createSlice({
   },
 });
 
-export default errors.reducer;
-export const { addError, removeError } = errors.actions;
+const actions = { ...slice.actions };
+
+export { actions };
+export default slice.reducer;

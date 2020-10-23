@@ -1,7 +1,7 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import channels from './channels';
 import messages, { actions as messagesActions, addMessage } from './messages';
-import errors from './errors';
+import channels, { actions as channelsActions, asyncActions as asyncChannelsActions } from './channels';
+import errors, { actions as errorsActions } from './errors';
 
 const rootReducer = combineReducers({
   messages,
@@ -15,7 +15,10 @@ const store = configureStore({
 
 export default store;
 
-const actions = { ...messagesActions };
-const asyncActions = { addMessage };
+const actions = { ...messagesActions, ...channelsActions, ...errorsActions };
+const asyncActions = {
+  addMessage,
+  ...asyncChannelsActions,
+};
 
 export { actions, asyncActions };

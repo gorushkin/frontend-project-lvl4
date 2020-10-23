@@ -4,7 +4,7 @@ import cn from 'classnames';
 import {
   Nav, Dropdown, Button, ButtonGroup,
 } from 'react-bootstrap';
-import { changeChannel } from '../slices/channels';
+import { actions } from '../slices';
 import getModals from '../modals';
 
 const mapStateToProps = ({ channels }) => {
@@ -114,4 +114,4 @@ const Channels = ({ channels, currentChannelId, changeChannelAction }) => {
   );
 };
 
-export default connect(mapStateToProps, { changeChannelAction: changeChannel })(Channels);
+export default connect(mapStateToProps, { changeChannelAction: actions.changeChannel })(Channels);

@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { removeChannelSuccsess } from './channels';
-import { addError } from './errors';
+import { actions as channelsActions } from './channels';
+import { actions as errorsActions } from './errors';
 
 import routes from '../routes';
 
-const messages = createSlice({
+const slice = createSlice({
   name: 'messages',
   initialState: {
     messageList: [],
@@ -14,12 +14,12 @@ const messages = createSlice({
     addMessageSuccsess(state, { payload: { message } }) {
       state.messageList.push(message);
     },
-    getAllMessages(state, { payload: { messages: allmessages } }) {
-      state.messageList = allmessages;
+    getAllMessages(state, { payload: { messages } }) {
+      state.messageList = messages;
     },
   },
   extraReducers: {
-    [removeChannelSuccsess]: (state, { payload }) => {
+    [channelsActions.removeChannelSuccsess]: (state, { payload }) => {
       const { id } = payload;
       state.messageList = state.messageList.filter(({ channelId }) => channelId !== id);
     },
@@ -33,12 +33,12 @@ const addMessage = createAsyncThunk(
     try {
       await axios.post(url, { data: { attributes: { message, userName } } });
     } catch (error) {
-      dispatch(addError(error.message));
+      dispatch(errorsActions.addError(error.message));
     }
   },
 );
 
-const actions = { ...messages.actions };
+const actions = { ...slice.actions };
 export { actions, addMessage };
 
-export default messages.reducer;
+export default slice.reducer;

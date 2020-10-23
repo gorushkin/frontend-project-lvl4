@@ -1,19 +1,19 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import _ from 'lodash';
-import { addError } from './errors';
+import { actions as errorsActions } from './errors';
 
 import routes from '../routes';
 
-const channels = createSlice({
+const slice = createSlice({
   name: 'channels',
   initialState: {
     channels: [],
     currentChannelId: '',
   },
   reducers: {
-    getAllChannels(state, { payload: { channels: channelsList, currentChannelId } }) {
-      state.channels = channelsList;
+    getAllChannels(state, { payload: { channels, currentChannelId } }) {
+      state.channels = channels;
       state.currentChannelId = currentChannelId;
     },
     changeChannel(state, { payload: { id } }) {
@@ -30,8 +30,8 @@ const channels = createSlice({
       state.channels.push({ id, name, removable });
     },
     removeChannelSuccsess(state, { payload: { id } }) {
-      const updatedChannelsList = state.channels.filter((item) => item.id !== id);
-      state.channels = updatedChannelsList;
+      const channels = state.channels.filter((item) => item.id !== id);
+      state.channels = channels;
     },
     renameChannelSuccsess(
       state,
@@ -47,41 +47,38 @@ const channels = createSlice({
   },
 });
 
-export default channels.reducer;
-export const {
-  getAllChannels,
-  changeChannel,
-  addChannelSuccsess,
-  removeChannelSuccsess,
-  renameChannelSuccsess,
-} = channels.actions;
-
-export const addChannel = createAsyncThunk('addchannl', async (name, { dispatch }) => {
+const addChannel = createAsyncThunk('addchannl', async (name, { dispatch }) => {
   const url = routes.channelsPath();
   try {
     await axios.post(url, { data: { attributes: { name } } });
   } catch (error) {
-    dispatch(addError(error.message));
+    dispatch(errorsActions.addError(error.message));
   }
 });
 
-export const removeChannel = createAsyncThunk('removeChannel', async (id, { dispatch }) => {
+const removeChannel = createAsyncThunk('removeChannel', async (id, { dispatch }) => {
   const url = routes.channelPath(id);
   try {
     await axios.delete(url);
   } catch (error) {
-    dispatch(addError(error.message));
+    dispatch(errorsActions.addError(error.message));
   }
 });
 
-export const renameChannel = createAsyncThunk(
+const renameChannel = createAsyncThunk(
   'renamechannel',
   async ({ name, id }, { dispatch }) => {
     const url = routes.channelPath(id);
     try {
       await axios.patch(url, { data: { attributes: { name } } });
     } catch (error) {
-      dispatch(addError(error.message));
+      dispatch(errorsActions.addError(error.message));
     }
   },
 );
+
+const actions = { ...slice.actions };
+const asyncActions = { addChannel, removeChannel, renameChannel };
+export { actions, asyncActions };
+
+export default slice.reducer;
