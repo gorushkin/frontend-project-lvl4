@@ -27,7 +27,7 @@ const slice = createSlice({
 });
 
 const addMessage = createAsyncThunk(
-  'addmessage',
+  'messages/addMessage',
   async ({ message, channelId, userName }, { dispatch }) => {
     const url = routes.channelMessagesPath(channelId);
     try {

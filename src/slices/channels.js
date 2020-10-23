@@ -21,11 +21,7 @@ const slice = createSlice({
     },
     addChannelSuccsess(
       state,
-      {
-        payload: {
-          channel: { id, name, removable },
-        },
-      },
+      { payload: { channel: { id, name, removable } } },
     ) {
       state.channels.push({ id, name, removable });
     },
@@ -35,11 +31,7 @@ const slice = createSlice({
     },
     renameChannelSuccsess(
       state,
-      {
-        payload: {
-          channel: { name, id },
-        },
-      },
+      { payload: { channel: { name, id } } },
     ) {
       const itemIndex = _.findIndex(state.channels, { id });
       state.channels[itemIndex] = { ...state.channels[itemIndex], name };
@@ -47,7 +39,7 @@ const slice = createSlice({
   },
 });
 
-const addChannel = createAsyncThunk('addchannl', async (name, { dispatch }) => {
+const addChannel = createAsyncThunk('channels/addChannel', async (name, { dispatch }) => {
   const url = routes.channelsPath();
   try {
     await axios.post(url, { data: { attributes: { name } } });
@@ -56,7 +48,7 @@ const addChannel = createAsyncThunk('addchannl', async (name, { dispatch }) => {
   }
 });
 
-const removeChannel = createAsyncThunk('removeChannel', async (id, { dispatch }) => {
+const removeChannel = createAsyncThunk('channels/removeChannel', async (id, { dispatch }) => {
   const url = routes.channelPath(id);
   try {
     await axios.delete(url);
@@ -66,7 +58,7 @@ const removeChannel = createAsyncThunk('removeChannel', async (id, { dispatch })
 });
 
 const renameChannel = createAsyncThunk(
-  'renamechannel',
+  'channels/renameChannel',
   async ({ name, id }, { dispatch }) => {
     const url = routes.channelPath(id);
     try {
