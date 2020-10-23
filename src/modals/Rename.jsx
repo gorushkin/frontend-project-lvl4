@@ -4,14 +4,10 @@ import { useFormik } from 'formik';
 import {
   Modal, FormGroup, FormControl, Button,
 } from 'react-bootstrap';
-import { renameChannel } from '../slices/channels';
+import { asyncActions } from '../slices';
 import validationSchema from './channelNameValidation';
 
-const actionCreators = {
-  renameChannelAction: renameChannel,
-};
-
-const AddChannelModal = ({ onHide, renameChannelAction, item }) => {
+const AddChannelModal = ({ onHide, renameChannel, item }) => {
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.select();
@@ -23,7 +19,7 @@ const AddChannelModal = ({ onHide, renameChannelAction, item }) => {
     initialValues: { name },
     validationSchema: validationSchema(item.channels),
     onSubmit: (values) => {
-      renameChannelAction(values.name, id);
+      renameChannel({ name: values.name, id });
       onHide();
     },
   });
@@ -63,4 +59,4 @@ const AddChannelModal = ({ onHide, renameChannelAction, item }) => {
   );
 };
 
-export default connect(null, actionCreators)(AddChannelModal);
+export default connect(null, { renameChannel: asyncActions.renameChannel })(AddChannelModal);

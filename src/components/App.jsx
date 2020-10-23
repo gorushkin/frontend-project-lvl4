@@ -1,11 +1,11 @@
 import React from 'react';
 import Channels from './Channels';
-import RightColumn from './RightColumn';
+import Chat from './Chat';
 
 const App = () => (
   <div className="row h-100 pb-3">
     <Channels />
-    <RightColumn />
+    <Chat />
   </div>
 );
 export default App;

@@ -1,39 +1,44 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { removeChannelSuccsess } from './channels';
+import { actions as channelsActions } from './channels';
+import { actions as errorsActions } from './errors';
 
 import routes from '../routes';
 
-const messages = createSlice({
+const slice = createSlice({
   name: 'messages',
   initialState: {
-    messageList: [],
+    messages: [],
   },
   reducers: {
-    addMessageSuccsess(state, { payload }) {
-      state.messageList.push(payload.message);
+    addMessageSuccsess(state, { payload: { message } }) {
+      state.messages.push(message);
     },
-    getAllMessages(state, { payload }) {
-      state.messageList = payload.messages;
+    getAllMessages(state, { payload: { messages } }) {
+      state.messages = messages;
     },
   },
   extraReducers: {
-    [removeChannelSuccsess]: (state, { payload }) => {
+    [channelsActions.removeChannelSuccsess]: (state, { payload }) => {
       const { id } = payload;
-      state.messageList = state.messageList.filter(({ channelId }) => channelId !== id);
+      state.messages = state.messages.filter(({ channelId }) => channelId !== id);
     },
   },
 });
 
-export default messages.reducer;
-export const {
-  addMessageFromSocket,
-  addMessageSuccsess,
-  getAllMessages,
-  removeMessages,
-} = messages.actions;
+const addMessage = createAsyncThunk(
+  'messages/addMessage',
+  async ({ message, channelId, userName }, { dispatch }) => {
+    const url = routes.channelMessagesPath(channelId);
+    try {
+      await axios.post(url, { data: { attributes: { message, userName } } });
+    } catch (error) {
+      dispatch(errorsActions.addError(error.message));
+    }
+  },
+);
 
-export const addMessage = (message, channelId, userName) => async () => {
-  const url = routes.channelMessagesPath(channelId);
-  await axios.post(url, { data: { attributes: { message, userName } } });
-};
+const actions = { ...slice.actions };
+export { actions, addMessage };
+
+export default slice.reducer;

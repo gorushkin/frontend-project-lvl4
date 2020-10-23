@@ -1,18 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
-import { removeChannel } from '../slices/channels';
+import { asyncActions } from '../slices';
 
-const actionCreators = {
-  removeChannelAction: removeChannel,
-};
-
-const AddChannelModal = (props) => {
-  const { onHide, removeChannelAction, item } = props;
-  const { id } = item;
-
+const AddChannelModal = ({ onHide, removeChannel, item: { id } }) => {
   const removeChannelHandler = () => {
-    removeChannelAction(id);
+    removeChannel(id);
     onHide();
   };
 
@@ -36,4 +29,4 @@ const AddChannelModal = (props) => {
   );
 };
 
-export default connect(null, actionCreators)(AddChannelModal);
+export default connect(null, { removeChannel: asyncActions.removeChannel })(AddChannelModal);
