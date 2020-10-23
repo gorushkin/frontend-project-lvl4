@@ -1,8 +1,7 @@
 import cookies from 'js-cookie';
 import faker from 'faker';
 import io from 'socket.io-client';
-import store from './slices';
-import { getAllMessages, addMessageSuccsess } from './slices/messages';
+import store, { actions } from './slices';
 import {
   getAllChannels,
   addChannelSuccsess,
@@ -11,7 +10,7 @@ import {
 } from './slices/channels';
 
 export default (gon) => {
-  store.dispatch(getAllMessages(gon));
+  store.dispatch(actions.getAllMessages(gon));
   store.dispatch(getAllChannels(gon));
 
   if (!cookies.get('name')) {
@@ -25,7 +24,7 @@ export default (gon) => {
     const {
       data: { attributes },
     } = data;
-    store.dispatch(addMessageSuccsess({ message: attributes }));
+    store.dispatch(actions.addMessageSuccsess({ message: attributes }));
   });
 
   socket.on('newChannel', (data) => {

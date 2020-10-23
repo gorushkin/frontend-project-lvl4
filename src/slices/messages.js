@@ -26,15 +26,7 @@ const messages = createSlice({
   },
 });
 
-export default messages.reducer;
-export const {
-  addMessageFromSocket,
-  addMessageSuccsess,
-  getAllMessages,
-  removeMessages,
-} = messages.actions;
-
-export const addMessage = createAsyncThunk(
+const addMessage = createAsyncThunk(
   'addmessage',
   async ({ message, channelId, userName }, { dispatch }) => {
     const url = routes.channelMessagesPath(channelId);
@@ -45,3 +37,8 @@ export const addMessage = createAsyncThunk(
     }
   },
 );
+
+const actions = { ...messages.actions };
+export { actions, addMessage };
+
+export default messages.reducer;
