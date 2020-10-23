@@ -1,18 +1,13 @@
 import React, { useContext, useRef, useEffect } from 'react';
-
 import { useFormik } from 'formik';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { asyncActions } from '../slices';
 import userNameContext from '../context';
 
-const mapStateToProps = ({ channels }) => {
-  const props = {
-    currentChannelId: channels.currentChannelId,
-  };
-  return props;
-};
-
-const InputForm = ({ addMessage, currentChannelId }) => {
+const InputForm = () => {
+  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
+  const { addMessage } = asyncActions;
+  const dispatch = useDispatch();
   const userName = useContext(userNameContext);
 
   const inputRef = useRef();
@@ -26,11 +21,13 @@ const InputForm = ({ addMessage, currentChannelId }) => {
       body: '',
     },
 
-    onSubmit: (values, { resetForm }) => addMessage({
-      message: values.body,
-      channelId: currentChannelId,
-      userName,
-    })
+    onSubmit: (values, { resetForm }) => dispatch(
+      addMessage({
+        message: values.body,
+        channelId: currentChannelId,
+        userName,
+      }),
+    )
       .then(() => resetForm())
       .then(() => inputRef.current.focus()),
   });
@@ -66,4 +63,4 @@ const InputForm = ({ addMessage, currentChannelId }) => {
   );
 };
 
-export default connect(mapStateToProps, { addMessage: asyncActions.addMessage })(InputForm);
+export default InputForm;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import cn from 'classnames';
 import {
   Nav, Dropdown, Button, ButtonGroup,
@@ -7,21 +7,14 @@ import {
 import { actions } from '../slices';
 import getModals from '../modals';
 
-const mapStateToProps = ({ channels }) => {
-  const props = {
-    channels: channels.channels,
-    currentChannelId: channels.currentChannelId,
-  };
-  return props;
-};
-
 const channel = (
   { id, name, removable },
   currentChannelId,
-  changeChannelAction,
   removelHandler,
   renamelHandler,
 ) => {
+  const dispatch = useDispatch();
+
   const btnClass = cn('nav-link text-left', {
     'btn-block mb-2': !removable,
     'flex-grow-1': removable,
@@ -30,7 +23,7 @@ const channel = (
   const btnColor = currentChannelId === id ? 'primary' : 'light';
 
   const changeChannelHandler = () => {
-    changeChannelAction({ id });
+    dispatch(actions.changeChannel({ id }));
   };
 
   if (removable) {
@@ -77,8 +70,12 @@ const renderModal = ({ type, item }, hideModal) => {
   return <Component onHide={hideModal} item={item} />;
 };
 
-const Channels = ({ channels, currentChannelId, changeChannelAction }) => {
+const Channels = () => {
+  const { channels } = useSelector((state) => state.channels);
+  const { currentChannelId } = useSelector((state) => state.channels);
+
   const [modalInfo, setModalInfo] = useState({ type: null });
+
   const hideModal = () => setModalInfo({ type: null, item: null });
 
   const addChannelHandler = () => {
@@ -105,7 +102,6 @@ const Channels = ({ channels, currentChannelId, changeChannelAction }) => {
         {channels
           .map((item) => channel(item,
             currentChannelId,
-            changeChannelAction,
             removelHandler,
             renamelHandler))}
       </Nav>
@@ -114,4 +110,4 @@ const Channels = ({ channels, currentChannelId, changeChannelAction }) => {
   );
 };
 
-export default connect(mapStateToProps, { changeChannelAction: actions.changeChannel })(Channels);
+export default Channels;

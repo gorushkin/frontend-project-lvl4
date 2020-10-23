@@ -1,17 +1,18 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Alert } from 'react-bootstrap';
 import { actions } from '../slices';
 
-const mapStateToProps = ({ errors }) => errors;
+const Error = () => {
+  const { errors: { isError, text } } = useSelector((state) => state);
+  const dispatch = useDispatch();
 
-const Error = ({ text, isError, removeError: removeErrorAction }) => {
   if (!isError) return null;
   return (
-    <Alert onClose={() => removeErrorAction()} dismissible variant="danger">
+    <Alert onClose={() => dispatch(actions.removeError())} dismissible variant="danger">
       {text}
     </Alert>
   );
 };
 
-export default connect(mapStateToProps, { removeError: actions.removeError })(Error);
+export default Error;

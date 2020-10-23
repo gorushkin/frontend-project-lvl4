@@ -3,7 +3,7 @@ import InputForm from './InputForm';
 import Messages from './Messages';
 import Error from './Error';
 
-export default () => (
+const Chat = () => (
   <div className="col h-100">
     <div className="d-flex flex-column h-100">
       <Error />
@@ -12,3 +12,5 @@ export default () => (
     </div>
   </div>
 );
+
+export default Chat;

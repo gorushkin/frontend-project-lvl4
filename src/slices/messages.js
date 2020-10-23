@@ -8,20 +8,20 @@ import routes from '../routes';
 const slice = createSlice({
   name: 'messages',
   initialState: {
-    messageList: [],
+    messages: [],
   },
   reducers: {
     addMessageSuccsess(state, { payload: { message } }) {
-      state.messageList.push(message);
+      state.messages.push(message);
     },
     getAllMessages(state, { payload: { messages } }) {
-      state.messageList = messages;
+      state.messages = messages;
     },
   },
   extraReducers: {
     [channelsActions.removeChannelSuccsess]: (state, { payload }) => {
       const { id } = payload;
-      state.messageList = state.messageList.filter(({ channelId }) => channelId !== id);
+      state.messages = state.messages.filter(({ channelId }) => channelId !== id);
     },
   },
 });
