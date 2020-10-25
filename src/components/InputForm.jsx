@@ -62,7 +62,6 @@ const InputForm = () => {
             >
               Submit
             </button>
-
             <div className="d-block invalid-feedback">{formik.errors.body}</div>
           </div>
         </div>
