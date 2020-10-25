@@ -3,16 +3,16 @@ import { createSlice } from '@reduxjs/toolkit';
 const slice = createSlice({
   name: 'errors',
   initialState: {
-    text: '',
+    error: '',
     isError: false,
   },
   reducers: {
     addError(state, { payload }) {
-      state.text = payload;
+      state.error = payload;
       state.isError = true;
     },
     removeError(state) {
-      state.text = '';
+      state.error = '';
       state.isError = false;
     },
   },

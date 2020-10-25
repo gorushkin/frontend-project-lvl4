@@ -1,5 +1,6 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
+import * as yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 import { asyncActions } from '../slices';
 import userNameContext from '../context';
@@ -12,6 +13,10 @@ const InputForm = () => {
 
   const inputRef = useRef();
 
+  const SignupSchema = yup.object({
+    body: yup.string().required('Message can`t be blank'),
+  });
+
   useEffect(() => {
     inputRef.current.focus();
   }, [null]);
@@ -20,6 +25,8 @@ const InputForm = () => {
     initialValues: {
       body: '',
     },
+    validationSchema: SignupSchema,
+    validateOnChange: false,
 
     onSubmit: (values, { resetForm }) => dispatch(
       addMessage({
@@ -55,7 +62,7 @@ const InputForm = () => {
             >
               Submit
             </button>
-            <div className="d-block invalid-feedback">&nbsp;</div>
+            <div className="d-block invalid-feedback">{formik.errors.body}</div>
           </div>
         </div>
       </form>
