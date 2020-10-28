@@ -2,10 +2,12 @@ import React, { useContext, useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { asyncActions } from '../slices';
 import userNameContext from '../context';
 
 const InputForm = () => {
+  const { t } = useTranslation();
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const { addMessage } = asyncActions;
   const dispatch = useDispatch();
@@ -14,7 +16,7 @@ const InputForm = () => {
   const inputRef = useRef();
 
   const SignupSchema = yup.object({
-    body: yup.string().required('Message can`t be blank'),
+    body: yup.string().required('blankInput'),
   });
 
   useEffect(() => {
@@ -62,7 +64,7 @@ const InputForm = () => {
             >
               Submit
             </button>
-            <div className="d-block invalid-feedback">{formik.errors.body}</div>
+            <div className="d-block invalid-feedback">{t(formik.errors.body)}</div>
           </div>
         </div>
       </form>
