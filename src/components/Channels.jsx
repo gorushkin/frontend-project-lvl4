@@ -10,11 +10,10 @@ import getModals from '../modals';
 const channel = (
   { id, name, removable },
   currentChannelId,
+  dispatch,
   removelHandler,
   renamelHandler,
 ) => {
-  const dispatch = useDispatch();
-
   const btnClass = cn('nav-link text-left', {
     'btn-block mb-2': !removable,
     'flex-grow-1': removable,
@@ -73,6 +72,7 @@ const renderModal = ({ type, item }, hideModal) => {
 const Channels = () => {
   const { channels } = useSelector((state) => state.channels);
   const { currentChannelId } = useSelector((state) => state.channels);
+  const dispatch = useDispatch();
 
   const [modalInfo, setModalInfo] = useState({ type: null });
 
@@ -100,10 +100,7 @@ const Channels = () => {
       </div>
       <Nav variant="pills" className="flex-column nav-fill">
         {channels
-          .map((item) => channel(item,
-            currentChannelId,
-            removelHandler,
-            renamelHandler))}
+          .map((item) => channel(item, currentChannelId, dispatch, removelHandler, renamelHandler))}
       </Nav>
       {renderModal(modalInfo, hideModal)}
     </div>
