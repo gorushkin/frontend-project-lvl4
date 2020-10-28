@@ -7,7 +7,7 @@ import { asyncActions } from '../slices';
 import userNameContext from '../context';
 
 const InputForm = () => {
-  const { t, f18n } = useTranslation();
+  const { t } = useTranslation();
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const { addMessage } = asyncActions;
   const dispatch = useDispatch();

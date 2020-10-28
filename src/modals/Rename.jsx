@@ -9,7 +9,7 @@ import { asyncActions } from '../slices';
 import validationSchema from './channelNameValidation';
 
 const AddChannelModal = ({ onHide, renameChannel, item }) => {
-  const { t, f18n } = useTranslation();
+  const { t } = useTranslation();
 
   const inputRef = useRef();
   useEffect(() => {
