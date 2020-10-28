@@ -1,9 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 const Messages = () => {
-  const { messages } = useSelector((state) => state.messages);
   const { currentChannelId } = useSelector((state) => state.channels);
+  const { messages } = useSelector((state) => state.messages);
+
+  const messageList = useMemo(() => messages
+    .filter(({ channelId }) => channelId === currentChannelId));
 
   const messageFrame = useRef();
 
@@ -13,23 +16,17 @@ const Messages = () => {
   }, [messages, currentChannelId]);
 
   return (
-    <div
-      ref={messageFrame}
-      id="messages-box"
-      className="chat-messages overflow-auto mb-3"
-    >
-      {messages
-        .filter((item) => item.channelId === currentChannelId)
-        .map((item) => (
-          <div key={item.id}>
-            <b>
-              {item.userName}
-              :
-            </b>
-            {' '}
-            {item.message}
-          </div>
-        ))}
+    <div ref={messageFrame} id="messages-box" className="chat-messages overflow-auto mb-3">
+      {messageList.map((item) => (
+        <div key={item.id}>
+          <b>
+            {item.userName}
+            :
+          </b>
+          {' '}
+          {item.message}
+        </div>
+      ))}
     </div>
   );
 };
