@@ -4,6 +4,7 @@ import cn from 'classnames';
 import {
   Nav, Dropdown, Button, ButtonGroup,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { actions } from '../slices';
 import getModals from '../modals';
 

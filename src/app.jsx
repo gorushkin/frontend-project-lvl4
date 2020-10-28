@@ -7,7 +7,9 @@ import userNameContext from './context';
 import store from './slices';
 import initApp from './init.js';
 
-export default (gon) => {
+import './i18n';
+
+export default async (gon) => {
   initApp(gon);
 
   const userName = cookies.get('name');
