@@ -4,10 +4,13 @@ import { useFormik } from 'formik';
 import {
   Modal, FormGroup, FormControl, Button,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { asyncActions } from '../slices';
 import validationSchema from './channelNameValidation';
 
 const AddChannelModal = ({ onHide, addChannel, item }) => {
+  const { t, f18n } = useTranslation();
+
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
@@ -39,7 +42,7 @@ const AddChannelModal = ({ onHide, addChannel, item }) => {
               isInvalid={!!formik.errors.name}
             />
             {formik.errors.name ? (
-              <div className="d-block mb-2 invalid-feedback">{formik.errors.name}</div>
+              <div className="d-block mb-2 invalid-feedback">{t(formik.errors.name)}</div>
             ) : null}
             <div className="d-flex justify-content-end">
               <Button onClick={onHide} type="button" variant="secondary" className="mr-2">
