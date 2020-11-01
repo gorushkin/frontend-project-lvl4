@@ -5,13 +5,20 @@ import cookies from 'js-cookie';
 import faker from 'faker';
 import io from 'socket.io-client';
 import { configureStore } from '@reduxjs/toolkit';
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
 import App from './components/App';
 import userNameContext from './context';
 import reducer, { actions } from './slices';
-
-import './i18n';
+import { en, ru } from './locales';
 
 export default async (gon) => {
+  i18n.use(LanguageDetector).use(initReactI18next).init({
+    resources: { en, ru },
+    fallbackLng: 'en',
+  });
+
   const store = configureStore({
     reducer,
   });
