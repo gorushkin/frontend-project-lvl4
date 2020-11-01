@@ -71,6 +71,6 @@ export default async (gon) => {
         <App />
       </userNameContext.Provider>
     </Provider>,
-    root
+    root,
   );
 };
