@@ -8,12 +8,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import gon from 'gon';
 import App from './components/App';
 import userNameContext from './context';
 import reducer, { actions } from './slices';
 import { en, ru } from './locales';
 
-export default async (gon) => {
+export default async () => {
   i18n.use(LanguageDetector).use(initReactI18next).init({
     resources: { en, ru },
     fallbackLng: 'en',
