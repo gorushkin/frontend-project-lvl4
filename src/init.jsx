@@ -1,9 +1,29 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import cookies from 'js-cookie';
 import faker from 'faker';
 import io from 'socket.io-client';
-import store, { actions } from './slices';
+import { configureStore } from '@reduxjs/toolkit';
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
+import gon from 'gon';
+import App from './components/App';
+import userNameContext from './context';
+import reducer, { actions } from './slices';
+import { en, ru } from './locales';
 
-export default async (gon) => {
+export default async () => {
+  i18n.use(LanguageDetector).use(initReactI18next).init({
+    resources: { en, ru },
+    fallbackLng: 'en',
+  });
+
+  const store = configureStore({
+    reducer,
+  });
+
   store.dispatch(actions.getAllMessages(gon));
   store.dispatch(actions.getAllChannels(gon));
 
@@ -41,4 +61,17 @@ export default async (gon) => {
     } = data;
     store.dispatch(actions.renameChannelSuccsess({ channel: attributes }));
   });
+
+  const userName = cookies.get('name');
+
+  const root = document.getElementById('chat');
+
+  ReactDOM.render(
+    <Provider store={store}>
+      <userNameContext.Provider value={userName}>
+        <App />
+      </userNameContext.Provider>
+    </Provider>,
+    root,
+  );
 };
