@@ -33,8 +33,8 @@ const slice = createSlice({
       state,
       { payload: { channel: { name, id } } },
     ) {
-      const itemIndex = _.findIndex(state.channels, { id });
-      state.channels[itemIndex] = { ...state.channels[itemIndex], name };
+      const channel = state.channels.find((item) => item.id === id);
+      channel.name = name;
     },
   },
 });
