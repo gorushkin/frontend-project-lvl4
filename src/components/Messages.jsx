@@ -1,23 +1,27 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { createSelector } from '@reduxjs/toolkit';
+
+const currentChannelMessages = createSelector(
+  (state) => state.messages.messages,
+  (state) => state.channels.currentChannelId,
+  (messages, currentChannelId) => messages
+    .filter(({ channelId }) => channelId === currentChannelId),
+);
 
 const Messages = () => {
-  const { currentChannelId } = useSelector((state) => state.channels);
-  const { messages } = useSelector((state) => state.messages);
-
-  const messageList = useMemo(() => messages
-    .filter(({ channelId }) => channelId === currentChannelId));
+  const messages = useSelector(currentChannelMessages);
 
   const messageFrame = useRef();
 
   useEffect(() => {
     const frameHeight = messageFrame.current.scrollHeight;
     messageFrame.current.scrollTo(0, frameHeight);
-  }, [messages, currentChannelId]);
+  }, [messages]);
 
   return (
     <div ref={messageFrame} id="messages-box" className="chat-messages overflow-auto mb-3">
-      {messageList.map((item) => (
+      {messages.map((item) => (
         <div key={item.id}>
           <b>
             {item.userName}

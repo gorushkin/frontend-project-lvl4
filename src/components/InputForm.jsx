@@ -30,15 +30,11 @@ const InputForm = () => {
     validationSchema: SignupSchema,
     validateOnChange: false,
 
-    onSubmit: (values, { resetForm }) => dispatch(
-      addMessage({
-        message: values.body,
-        channelId: currentChannelId,
-        userName,
-      }),
-    )
-      .then(() => resetForm())
-      .then(() => inputRef.current.focus()),
+    onSubmit: async (values, { resetForm }) => {
+      dispatch(addMessage({ message: values.body, channelId: currentChannelId, userName }));
+      resetForm();
+      inputRef.current.focus();
+    },
   });
 
   return (

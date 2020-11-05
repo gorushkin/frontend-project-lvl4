@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import _ from 'lodash';
 import { actions as errorsActions } from './errors';
 
 import routes from '../routes';
@@ -33,8 +32,8 @@ const slice = createSlice({
       state,
       { payload: { channel: { name, id } } },
     ) {
-      const itemIndex = _.findIndex(state.channels, { id });
-      state.channels[itemIndex] = { ...state.channels[itemIndex], name };
+      const channel = state.channels.find((item) => item.id === id);
+      channel.name = name;
     },
   },
 });
