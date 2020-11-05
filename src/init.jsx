@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import cookies from 'js-cookie';
@@ -15,14 +15,24 @@ import reducer, { actions } from './slices';
 import { en, ru } from './locales';
 
 export default async () => {
-  i18n.use(LanguageDetector).use(initReactI18next).init({
-    resources: { en, ru },
-    fallbackLng: 'en',
-  });
-
   const store = configureStore({
     reducer,
   });
+
+  try {
+    await i18n
+      .use(LanguageDetector)
+      .use(initReactI18next)
+      .init({
+        resources: { en, ru },
+        fallbackLng: 'en',
+        interpolation: {
+          escapeValue: false,
+        },
+      });
+  } catch (error) {
+    store.dispatch(actions.addError(error.message));
+  }
 
   store.dispatch(actions.getAllMessages(gon));
   store.dispatch(actions.getAllChannels(gon));
