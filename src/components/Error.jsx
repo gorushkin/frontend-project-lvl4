@@ -9,9 +9,13 @@ const Error = () => {
   } = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  if (!isError) return null;
   return (
-    <Alert onClose={() => dispatch(actions.removeError())} dismissible variant="danger">
+    <Alert
+      show={isError}
+      onClose={() => dispatch(actions.removeError())}
+      dismissible
+      variant="danger"
+    >
       {error}
     </Alert>
   );
